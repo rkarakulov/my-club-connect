@@ -1,0 +1,53 @@
+{
+  "name": "mcc-auth",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/mcc-auth/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/mcc-auth",
+        "main": "apps/mcc-auth/src/main.ts",
+        "tsConfig": "apps/mcc-auth/tsconfig.app.json",
+        "assets": ["apps/mcc-auth/src/assets"],
+        "webpackConfig": "apps/mcc-auth/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "mcc-auth:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "mcc-auth:build:development"
+        },
+        "production": {
+          "buildTarget": "mcc-auth:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/mcc-auth/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
